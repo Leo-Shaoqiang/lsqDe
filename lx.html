@@ -16,6 +16,54 @@
 </style>
 <body>
 
+
+
+
+                                                    2018-11-11 兄弟同步
+
+        <div id="app">
+                <huahua></huahua>
+                <shuandan></shuandan>
+            </div>
+            <script>
+                var Event = new Vue();
+          Vue.component('huahua',{
+              template : 
+              `
+                <div>
+                    我说: <input @keyup = "on_change()" v-model= "i_said"/>
+                    </div>
+              `,
+            
+             data: function() {
+                 return {
+                   i_said : '',
+                 }
+             },
+             methods: {
+                 on_change : function () {
+                     Event.$emit('huahua-said-sth',this.i_said)
+                   }
+             }
+          }),
+          Vue.component('shuandan',{
+              template :`<div>花花说: {{huahua_said}}</div>`,
+              data () {
+                  return {
+                      huahua_said : '',
+                  }
+              },
+              mounted :function() {
+                  var me = this;
+                  Event.$on('huahua-said-sth', function(data){
+                      me.huahua_said = data;
+        
+                  });
+              }, 
+          })
+            new Vue({                       
+                el: '#app',
+            })
                                   
 
                                                     <!-- 2018-11-9   点击按钮 显示余额 -->
